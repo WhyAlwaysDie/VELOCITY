@@ -1,1 +1,23 @@
 
+name: VELOCITY Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find VELOCITY source
+        run: |
+          unzip -o VELOCITY.zip -d velocity-source
+          find velocity-source -name mod.json
+          find velocity-source -name CMakeLists.txt
+
+      - name: Check project files
+        run: |
+          echo "VELOCITY source files located."
