@@ -29,6 +29,7 @@ jobs:
           sdk: v5.0.0
           target: Android64
           path: ${{ env.PROJECT_DIR }}
+          ccache: false
 
       - name: Upload build
         uses: actions/upload-artifact@v4
