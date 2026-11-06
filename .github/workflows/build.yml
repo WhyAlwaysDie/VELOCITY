@@ -18,22 +18,22 @@ jobs:
           PROJECT_DIR=$(dirname "$(find velocity-source -name CMakeLists.txt -print -quit)")
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
 
-      - name: Fix Geode version
+      - name: Update Geode version
         run: |
           MOD_JSON=$(find velocity-source -name mod.json -print -quit)
-          sed -i 's/"geode": "v5.0.0"/"geode": "5.0.0"/' "$MOD_JSON"
+          sed -i 's/"geode": "5.0.0"/"geode": "5.11.2"/' "$MOD_JSON"
 
       - name: Build VELOCITY for Android
+        id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          sdk: v5.0.0
+          sdk: v5.11.2
           target: Android64
           path: ${{ env.PROJECT_DIR }}
-          ccache: false
 
-      - name: Upload build
+      - name: Upload VELOCITY
         uses: actions/upload-artifact@v4
         with:
           name: VELOCITY-Android
-          path: ${{ env.PROJECT_DIR }}/build/**/*.geode
+          path: ${{ steps.build.outputs.build-output }}/*.geode
           
