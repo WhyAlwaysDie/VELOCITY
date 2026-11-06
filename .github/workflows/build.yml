@@ -18,6 +18,11 @@ jobs:
           PROJECT_DIR=$(dirname "$(find velocity-source -name CMakeLists.txt -print -quit)")
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
 
+      - name: Fix Geode version
+        run: |
+          MOD_JSON=$(find velocity-source -name mod.json -print -quit)
+          sed -i 's/"geode": "v5.0.0"/"geode": "5.0.0"/' "$MOD_JSON"
+
       - name: Build VELOCITY for Android
         uses: geode-sdk/build-geode-mod@main
         with:
